@@ -1,9 +1,21 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_print
 
 import 'package:flutter/material.dart';
+// ignore: unused_import
+import 'package:flutter_application_1/screens/home_screen.dart';
+import 'package:flutter_application_1/utils/routes.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({ Key? key }) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+  String name="";
+  bool changeButton=false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +34,7 @@ class LoginScreen extends StatelessWidget {
                 height: 30,
               ),
         
-              Text("Login",
+              Text("Welcome $name",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30.0,
@@ -43,7 +55,12 @@ class LoginScreen extends StatelessWidget {
                       decoration: InputDecoration(
                         label: Text("Email"),
                         hintText: "Enter your email"
-                      )
+                      ),
+                      onChanged: (value){
+                        name = value;
+                        setState(() {
+                        });
+                      },
                     ),
         
                     TextFormField(
@@ -61,14 +78,52 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: 30,
               ),
-        
-              ElevatedButton(
-                onPressed: (){}, 
-                child: Text("Login"),
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal:50),
-                ),  
+
+              InkWell(
+                onTap: () async {
+                  setState(() {
+                    changeButton = true;
+                  });
+                  
+                  await Future.delayed (Duration(milliseconds: 500));
+                  Navigator.pushNamed(context, MyRoutes.homeRoute);
+                },
+
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 500),
+                  width: changeButton ? 50 : 150,
+                  height: 50,
+                  
+                  child: changeButton ? 
+                    Icon(
+                      Icons.done, 
+                      color: Colors.white,
+                    ) :  
+                    
+                    Text("Login", 
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    )
+                  ),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: changeButton ?  BorderRadius.circular(50) : BorderRadius.circular(8.0),
+                    color: Colors.teal,
+                  ),
+                ),
               ),
+        
+              // ElevatedButton(
+              //   onPressed: (){
+              //     Navigator.pushNamed(context, MyRoutes.homeRoute);
+              //   }, 
+              //   child: Text("Login"),
+              //   style: TextButton.styleFrom(
+              //     padding: EdgeInsets.symmetric(vertical: 10, horizontal:50),
+              //   ),  
+              // ),
         
               SizedBox(
                 height: 15,
@@ -78,7 +133,7 @@ class LoginScreen extends StatelessWidget {
         
               TextButton(
                   onPressed: () {
-                    print("Create Account");
+                    
                   },
                   child: const Text('Create new account'),
                 ),

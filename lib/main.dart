@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
 
       routes: {
         // Slash is by default Route
+        "/": (context) => LoginScreen(),
         MyRoutes.loginRoute : (context) => LoginScreen(),
         MyRoutes.homeRoute : (context) => HomeScreen(),
       },
